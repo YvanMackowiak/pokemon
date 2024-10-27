@@ -1,5 +1,10 @@
-import { Box } from "@mui/material";
+import { Home } from "./pages/Home";
+import "./reset.css";
 
 export const App = () => {
-  return <Box>slt</Box>;
+  return (
+    <>
+      <Home />
+    </>
+  );
 };
