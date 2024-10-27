@@ -4,7 +4,7 @@ const app = express();
 const PORT = 5000;
 
 app.get("/", (req, res) => {
-  res.send("Serveur Node.js en fonctionnement !");
+  res.send("Serveur Node.js en fonctionnement ou pas !");
 });
 
 app.listen(PORT, () => {
