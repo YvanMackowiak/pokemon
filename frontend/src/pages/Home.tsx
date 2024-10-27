@@ -17,8 +17,6 @@ export const Home = ({}: HomeProps) => {
     pokemon: pokemonTwo,
   } = usePokemonById(randomNumberTwo);
 
-  console.log(pokemon);
-
   return (
     <>
       <img
