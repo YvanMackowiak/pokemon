@@ -77,8 +77,9 @@ export const Home = ({}: HomeProps) => {
           </Typography>
         </Box>
         <Box display="flex" justifyContent="center" gap={4} pt={3}>
-          {pokemon && <PokemonCard pokemon={pokemon} />}
-          {pokemonTwo && <PokemonCard pokemon={pokemonTwo} />}
+          <PokemonCard pokemon={pokemon} loading={loading} />
+
+          <PokemonCard pokemon={pokemonTwo} loading={loadingTwo} />
         </Box>
       </Box>
     </>
