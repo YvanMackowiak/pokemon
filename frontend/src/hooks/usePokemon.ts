@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Pokemon } from "../interface/Pokemon";
 
 export const usePokemon = () => {
@@ -63,4 +63,50 @@ export const usePokemonById = (id: number) => {
   }, [id]);
 
   return { pokemon, loading, error };
+};
+
+export const usePokemonListByIds = (ids: number[]) => {
+  const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const prevIdsRef = useRef<number[]>([]); // Cache les IDs déjà chargés
+
+  useEffect(() => {
+    // Évite les appels redondants si les IDs n'ont pas changé
+    if (JSON.stringify(prevIdsRef.current) === JSON.stringify(ids)) {
+      return;
+    }
+
+    // Fonction pour récupérer la liste des Pokémon par ID
+    const fetchPokemonList = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("http://localhost:5000/api/pokemon/list", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ids }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Erreur lors de la récupération des Pokémon");
+        }
+
+        const data = await response.json();
+        setPokemonList(data); // Met à jour la liste des Pokémon récupérés
+        prevIdsRef.current = ids; // Met à jour les IDs chargés pour éviter de rappeler la fonction inutilement
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (ids.length > 0 && !loading) {
+      fetchPokemonList();
+    }
+  }, [ids, loading]);
+
+  return { pokemonList, loading, error };
 };

@@ -2,20 +2,14 @@ import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
 import pokemonImage from "../assets/evolution.jpg";
 import { PokemonCard } from "../components/PokemonCard";
-import { usePokemonById } from "../hooks/usePokemon";
+import { usePokemonListByIds } from "../hooks/usePokemon";
 import { useRandomPokemonId } from "../hooks/useRandomPokemonId";
 
 interface HomeProps {}
 
 export const Home = ({}: HomeProps) => {
-  const randomNumber = useRandomPokemonId();
-  const randomNumberTwo = useRandomPokemonId();
-  const { error, loading, pokemon } = usePokemonById(randomNumber);
-  const {
-    error: errorTwo,
-    loading: loadingTwo,
-    pokemon: pokemonTwo,
-  } = usePokemonById(randomNumberTwo);
+  const { randomNumbersArray } = useRandomPokemonId();
+  const { loading, pokemonList } = usePokemonListByIds(randomNumbersArray);
 
   return (
     <>
@@ -75,9 +69,13 @@ export const Home = ({}: HomeProps) => {
           </Typography>
         </Box>
         <Box display="flex" justifyContent="center" gap={4} pt={3}>
-          <PokemonCard pokemon={pokemon} loading={loading} />
-
-          <PokemonCard pokemon={pokemonTwo} loading={loadingTwo} />
+          {pokemonList.map((pokemon) => (
+            <PokemonCard
+              key={pokemon.pokedex_id}
+              pokemon={pokemon}
+              loading={loading}
+            />
+          ))}
         </Box>
       </Box>
     </>
