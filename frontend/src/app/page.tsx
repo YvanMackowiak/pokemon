@@ -7,6 +7,7 @@ import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
 import Image from "next/image";
 import pokemonImage from "../assets/evolution.jpg";
+import Head from "./head";
 
 export default function Home() {
   const { randomNumbersArray } = useRandomPokemonId();
@@ -14,6 +15,10 @@ export default function Home() {
 
   return (
     <>
+      <Head
+        title="Page d'accueil - PokeTeamBuilder"
+        description="Découvrez des équipes Pokémon incroyables et personnalisez vos stratégies !"
+      />
       <Box sx={{ width: "100%", height: "auto", position: "relative" }}>
         <Image
           src={pokemonImage}
@@ -23,7 +28,6 @@ export default function Home() {
           style={{ objectFit: "cover", width: "100%", height: "auto" }}
         />
       </Box>
-
       <Box p={3}>
         <Box
           display="flex"

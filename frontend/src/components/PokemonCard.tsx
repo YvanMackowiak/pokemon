@@ -1,4 +1,6 @@
 import { Pokemon } from "@/interface/Pokemon";
+import { setSelectedPokemon } from "@/store/actions/selectedPokemon.actions";
+import { useAppDispatch } from "@/store/store";
 import Avatar from "@mui/material/Avatar/Avatar";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
@@ -15,8 +17,11 @@ interface PokemonCardProps {
 
 export const PokemonCard = ({ pokemon, loading }: PokemonCardProps) => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+
   const handleClick = () => {
     if (pokemon) {
+      dispatch(setSelectedPokemon(pokemon));
       router.push(`/pokemon/${pokemon.pokedex_id}`);
     }
   };
