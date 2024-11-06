@@ -13,7 +13,11 @@ const initialState: SelectedPokemonState = {
 const selectedPokemonSlice = createSlice({
   name: "selectedPokemon",
   initialState,
-  reducers: {},
+  reducers: {
+    clearSelectedPokemon: (state) => {
+      state.pokemon = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       setSelectedPokemon,
@@ -23,5 +27,7 @@ const selectedPokemonSlice = createSlice({
     );
   },
 });
+
+export const { clearSelectedPokemon } = selectedPokemonSlice.actions;
 
 export default selectedPokemonSlice.reducer;
