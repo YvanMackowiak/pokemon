@@ -5,6 +5,8 @@ import { usePokemonListByIds } from "@/hooks/usePokemon";
 import { useRandomPokemonId } from "@/hooks/useRandomPokemonId";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
+import Image from "next/image";
+import pokemonImage from "../assets/evolution.jpg";
 
 export default function Home() {
   const { randomNumbersArray } = useRandomPokemonId();
@@ -12,15 +14,16 @@ export default function Home() {
 
   return (
     <>
-      {/* <img
+      <Box sx={{ width: "100%", height: "auto", position: "relative" }}>
+        <Image
           src={pokemonImage}
           alt="Pokemon Evolution"
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "contain",
-          }} 
-        />*/}
+          width={1600}
+          height={900}
+          style={{ objectFit: "cover", width: "100%", height: "auto" }}
+        />
+      </Box>
+
       <Box p={3}>
         <Box
           display="flex"

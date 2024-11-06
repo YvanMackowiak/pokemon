@@ -1,8 +1,15 @@
+// next.config.js
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["raw.githubusercontent.com"], // Ajoutez le domaine ici
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+        pathname: "/Yarkis01/TyraDex/images/**", // Chemin pour les images
+      },
+    ],
   },
 };
 

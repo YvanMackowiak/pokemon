@@ -3,6 +3,7 @@ import Avatar from "@mui/material/Avatar/Avatar";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import Female from "../assets/Female.png";
 import Male from "../assets/Male.png";
 import Pika from "../assets/pikapika.gif";
@@ -13,6 +14,13 @@ interface PokemonCardProps {
 }
 
 export const PokemonCard = ({ pokemon, loading }: PokemonCardProps) => {
+  const router = useRouter();
+  const handleClick = () => {
+    if (pokemon) {
+      router.push(`/pokemon/${pokemon.pokedex_id}`);
+    }
+  };
+
   if (loading)
     return (
       <Box
@@ -26,7 +34,7 @@ export const PokemonCard = ({ pokemon, loading }: PokemonCardProps) => {
           alt="pikapika"
           width={200}
           height={200}
-          objectFit="contain"
+          style={{ objectFit: "contain" }}
         />
       </Box>
     );
@@ -34,7 +42,7 @@ export const PokemonCard = ({ pokemon, loading }: PokemonCardProps) => {
   if (pokemon)
     return (
       <Box
-        // onClick={handleBoxClick}
+        onClick={handleClick}
         sx={(t) => ({
           border: 1,
           borderColor: "grey.500",
@@ -62,7 +70,7 @@ export const PokemonCard = ({ pokemon, loading }: PokemonCardProps) => {
             alt={pokemon.name.fr}
             width={200}
             height={200}
-            objectFit="contain"
+            style={{ objectFit: "contain" }}
           />
         </Box>
         <Typography variant="body1">
@@ -80,7 +88,7 @@ export const PokemonCard = ({ pokemon, loading }: PokemonCardProps) => {
                 alt={type.name}
                 width={20}
                 height={20}
-                objectFit="contain"
+                style={{ objectFit: "contain" }}
               />
             </Box>
           ))}
