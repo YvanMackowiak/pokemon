@@ -3,8 +3,9 @@
 import { Header } from "@/components/Header";
 import Toolbar from "@mui/material/Toolbar/Toolbar";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 import "../reset.css";
-import { store } from "../store/store";
+import { persistor, store } from "../store/store";
 import ClientThemeProvider from "./ClientThemeProvider";
 
 export default function RootLayout({
@@ -13,16 +14,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Provider store={store}>
-      <html lang="fr" suppressHydrationWarning>
-        <body>
-          <ClientThemeProvider>
-            <Toolbar />
-            <Header />
-            <main>{children}</main>
-          </ClientThemeProvider>
-        </body>
-      </html>
-    </Provider>
+    <html lang="fr" suppressHydrationWarning>
+      <body>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <ClientThemeProvider>
+              <Toolbar />
+              <Header />
+              <main>{children}</main>
+            </ClientThemeProvider>
+          </PersistGate>
+        </Provider>
+      </body>
+    </html>
   );
 }

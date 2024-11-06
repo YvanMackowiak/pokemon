@@ -1,12 +1,11 @@
-import Box from "@mui/material/Box/Box";
-import Typography from "@mui/material/Typography/Typography";
+"use client";
 
-export default async function PokemonDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const { id } = await params;
+import { selectSelectedPokemon } from "@/store/reducers/selectedPokemonSlice";
+import { useAppSelector } from "@/store/store";
+import Box from "@mui/material/Box/Box";
+
+export default function PokemonDetailPage() {
+  const selectedPokemon = useAppSelector(selectSelectedPokemon);
 
   return (
     <Box
@@ -16,7 +15,7 @@ export default async function PokemonDetailPage({
         alignItems: "center",
       }}
     >
-      <Typography variant="body1">Détails du Pokémon N°{id}</Typography>
+      {selectedPokemon?.generation}
     </Box>
   );
 }
