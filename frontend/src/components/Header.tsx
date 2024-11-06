@@ -14,10 +14,11 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 import { useState } from "react";
 
 const drawerWidth = 240;
-const navItems = ["Home", "About", "Contact"];
+const navItems = [{ label: "Accueil", href: "/" }];
 
 export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -34,9 +35,11 @@ export const Header = () => {
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+          <ListItem key={item.label} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={item} />
+              <Link href={item.href} passHref>
+                <ListItemText primary={item.label} />
+              </Link>
             </ListItemButton>
           </ListItem>
         ))}
@@ -67,9 +70,9 @@ export const Header = () => {
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: "#fff" }}>
-                {item}
-              </Button>
+              <Link key={item.label} href={item.href} passHref>
+                <Button sx={{ color: "#fff" }}>{item.label}</Button>
+              </Link>
             ))}
           </Box>
         </Toolbar>
