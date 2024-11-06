@@ -1,10 +1,11 @@
+import { Pokemon } from "@/interface/Pokemon";
 import Avatar from "@mui/material/Avatar/Avatar";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
+import Image from "next/image";
 import Female from "../assets/Female.png";
 import Male from "../assets/Male.png";
 import Pika from "../assets/pikapika.gif";
-import { Pokemon } from "../interface/Pokemon";
 
 interface PokemonCardProps {
   pokemon: Pokemon | null;
@@ -20,7 +21,13 @@ export const PokemonCard = ({ pokemon, loading }: PokemonCardProps) => {
           height: 200,
         }}
       >
-        <img src={Pika} />
+        <Image
+          src={Pika}
+          alt="pikapika"
+          width={200}
+          height={200}
+          objectFit="contain"
+        />
       </Box>
     );
 
@@ -50,7 +57,13 @@ export const PokemonCard = ({ pokemon, loading }: PokemonCardProps) => {
             height: 200,
           }}
         >
-          <img src={pokemon.sprites.regular} alt={pokemon.name.fr} />
+          <Image
+            src={pokemon.sprites.regular}
+            alt={pokemon.name.fr}
+            width={200}
+            height={200}
+            objectFit="contain"
+          />
         </Box>
         <Typography variant="body1">
           N°{pokemon.pokedex_id} {pokemon.name.fr}
@@ -62,11 +75,12 @@ export const PokemonCard = ({ pokemon, loading }: PokemonCardProps) => {
               key={type.name}
               sx={{ width: 20, height: 20, position: "relative" }}
             >
-              <img
+              <Image
                 src={type.image}
                 alt={type.name}
-                style={{ objectFit: "contain" }}
-                sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                width={20}
+                height={20}
+                objectFit="contain"
               />
             </Box>
           ))}
@@ -74,11 +88,19 @@ export const PokemonCard = ({ pokemon, loading }: PokemonCardProps) => {
         {pokemon.sexe && (
           <Box sx={{ display: "flex", gap: 1 }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Avatar sx={{ width: 15, height: 15 }} src={Female} alt="femme" />
+              <Avatar
+                sx={{ width: 15, height: 15 }}
+                src={Female.src}
+                alt="femme"
+              />
               <Typography variant="body2">{pokemon.sexe?.female}</Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Avatar sx={{ width: 15, height: 15 }} src={Male} alt="homme" />
+              <Avatar
+                sx={{ width: 15, height: 15 }}
+                src={Male.src}
+                alt="homme"
+              />
               <Typography variant="body2">{pokemon.sexe?.male}</Typography>
             </Box>
           </Box>

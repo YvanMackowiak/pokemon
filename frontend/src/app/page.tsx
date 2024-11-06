@@ -1,27 +1,26 @@
+"use client";
+
+import { PokemonCard } from "@/components/PokemonCard";
+import { usePokemonListByIds } from "@/hooks/usePokemon";
+import { useRandomPokemonId } from "@/hooks/useRandomPokemonId";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
-import pokemonImage from "../assets/evolution.jpg";
-import { PokemonCard } from "../components/PokemonCard";
-import { usePokemonListByIds } from "../hooks/usePokemon";
-import { useRandomPokemonId } from "../hooks/useRandomPokemonId";
 
-interface HomeProps {}
-
-export const Home = ({}: HomeProps) => {
+export default function Home() {
   const { randomNumbersArray } = useRandomPokemonId();
   const { loading, pokemonList } = usePokemonListByIds(randomNumbersArray);
 
   return (
     <>
-      <img
-        src={pokemonImage}
-        alt="Pokemon Evolution"
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "contain",
-        }}
-      />
+      {/* <img
+          src={pokemonImage}
+          alt="Pokemon Evolution"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+          }} 
+        />*/}
       <Box p={3}>
         <Box
           display="flex"
@@ -80,4 +79,4 @@ export const Home = ({}: HomeProps) => {
       </Box>
     </>
   );
-};
+}
