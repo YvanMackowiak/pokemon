@@ -1,3 +1,5 @@
+import { Stats } from "@/models/pokemonModel";
+
 export interface Pokemon {
   pokedex_id: number;
   generation: number;
@@ -27,14 +29,7 @@ export interface Pokemon {
         tc: boolean;
       }[]
     | null;
-  stats: {
-    hp: number;
-    atk: number;
-    def: number;
-    spe_atk: number;
-    spe_def: number;
-    vit: number;
-  } | null;
+  stats: Stats | null;
   resistances:
     | {
         name: string;
