@@ -20,12 +20,12 @@ ChartJS.register(
   Legend
 );
 
-interface ComponentNameProps {
+interface PokemonStatsProps {
   stats: Stats;
   name: string;
 }
 
-export const StatsPoke = ({ stats, name }: ComponentNameProps) => {
+export const PokemonStats = ({ stats, name }: PokemonStatsProps) => {
   const labels = Object.keys(stats);
   const values = Object.values(stats);
 

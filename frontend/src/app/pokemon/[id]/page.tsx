@@ -1,7 +1,8 @@
 "use client";
 
 import { PokemonSexe } from "@/components/PokemonSexe";
-import { StatsPoke } from "@/components/StatsPoke";
+import { PokemonStats } from "@/components/PokemonStats";
+import { PokemonType } from "@/components/PokemonType";
 import { usePokemonById } from "@/hooks/usePokemon";
 import {
   selectSelectedPokemon,
@@ -78,12 +79,17 @@ export default function PokemonDetailPage() {
         </Typography>
         <Typography variant="h3">{selectedPokemon.name.jp}</Typography>
       </Box>
-      {selectedPokemon.sexe && (
-        <PokemonSexe pokemonSexe={selectedPokemon.sexe} />
-      )}
+      <Box display="flex" gap={1} alignItems="center">
+        {selectedPokemon.sexe && (
+          <PokemonSexe pokemonSexe={selectedPokemon.sexe} />
+        )}
+        {selectedPokemon.types && (
+          <PokemonType pokemonTypes={selectedPokemon.types} />
+        )}
+      </Box>
       {selectedPokemon.stats && (
         <Box width="500px">
-          <StatsPoke
+          <PokemonStats
             stats={selectedPokemon.stats}
             name={selectedPokemon.name.fr}
           />

@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Pika from "../assets/pikapika.gif";
 import { PokemonSexe } from "./PokemonSexe";
+import { PokemonType } from "./PokemonType";
 
 interface PokemonCardProps {
   pokemon: Pokemon | null;
@@ -79,23 +80,7 @@ export const PokemonCard = ({ pokemon, loading }: PokemonCardProps) => {
         <Typography variant="body1">
           N°{pokemon.pokedex_id} {pokemon.name.fr}
         </Typography>
-        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-          <Typography>Types :</Typography>
-          {pokemon.types?.map((type) => (
-            <Box
-              key={type.name}
-              sx={{ width: 20, height: 20, position: "relative" }}
-            >
-              <Image
-                src={type.image}
-                alt={type.name}
-                width={20}
-                height={20}
-                style={{ objectFit: "contain" }}
-              />
-            </Box>
-          ))}
-        </Box>
+        {pokemon.types && <PokemonType pokemonTypes={pokemon.types} />}
         {pokemon.sexe && <PokemonSexe pokemonSexe={pokemon.sexe} />}
       </Box>
     );
