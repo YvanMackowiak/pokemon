@@ -1,7 +1,7 @@
 "use client";
 
+import { Pokemon } from "@/models/pokemonModel";
 import { useEffect, useRef, useState } from "react";
-import { Pokemon } from "../interface/Pokemon";
 
 export const usePokemon = () => {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);

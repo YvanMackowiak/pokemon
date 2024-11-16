@@ -1,4 +1,4 @@
-import { Pokemon } from "@/interface/Pokemon";
+import { Pokemon } from "@/models/pokemonModel";
 import { setSelectedPokemon } from "@/store/actions/selectedPokemon.actions";
 import { useAppDispatch } from "@/store/store";
 import Box from "@mui/material/Box/Box";
