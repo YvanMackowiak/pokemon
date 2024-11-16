@@ -1,14 +1,12 @@
 import { Pokemon } from "@/interface/Pokemon";
 import { setSelectedPokemon } from "@/store/actions/selectedPokemon.actions";
 import { useAppDispatch } from "@/store/store";
-import Avatar from "@mui/material/Avatar/Avatar";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Female from "../assets/Female.png";
-import Male from "../assets/Male.png";
 import Pika from "../assets/pikapika.gif";
+import { PokemonSexe } from "./PokemonSexe";
 
 interface PokemonCardProps {
   pokemon: Pokemon | null;
@@ -98,26 +96,7 @@ export const PokemonCard = ({ pokemon, loading }: PokemonCardProps) => {
             </Box>
           ))}
         </Box>
-        {pokemon.sexe && (
-          <Box sx={{ display: "flex", gap: 1 }}>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Avatar
-                sx={{ width: 15, height: 15 }}
-                src={Female.src}
-                alt="femme"
-              />
-              <Typography variant="body2">{pokemon.sexe?.female}</Typography>
-            </Box>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Avatar
-                sx={{ width: 15, height: 15 }}
-                src={Male.src}
-                alt="homme"
-              />
-              <Typography variant="body2">{pokemon.sexe?.male}</Typography>
-            </Box>
-          </Box>
-        )}
+        {pokemon.sexe && <PokemonSexe pokemonSexe={pokemon.sexe} />}
       </Box>
     );
 

@@ -23,10 +23,7 @@ export interface Pokemon {
   height: string | null;
   weight: string | null;
   egg_groups: string[] | null;
-  sexe: {
-    male: number;
-    female: number;
-  } | null;
+  sexe: Sexe | null;
   catch_rate: number | null;
   level_100: number | null;
   formes: any | null;
@@ -40,6 +37,11 @@ export interface Type {
 export interface Talent {
   name: string;
   tc: boolean;
+}
+
+export interface Sexe {
+  male: number;
+  female: number;
 }
 
 export interface Stats {

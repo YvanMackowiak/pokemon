@@ -1,5 +1,6 @@
 "use client";
 
+import { PokemonSexe } from "@/components/PokemonSexe";
 import { StatsPoke } from "@/components/StatsPoke";
 import { usePokemonById } from "@/hooks/usePokemon";
 import {
@@ -34,22 +35,54 @@ export default function PokemonDetailPage() {
   if (!selectedPokemon) return <></>;
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center">
-      <Image
-        src={selectedPokemon.sprites.regular}
-        alt="pikapika"
-        width={400}
-        height={400}
-        style={{ objectFit: "contain" }}
-      />
+    <Box display="flex" flexDirection="column" alignItems="center" gap={1.5}>
+      <Box display="flex" alignItems="center" justifyContent="center">
+        {selectedPokemon.sprites.gmax && (
+          <>
+            <Image
+              src={selectedPokemon.sprites.gmax.regular}
+              alt="pikapika"
+              width={200}
+              height={200}
+              style={{ objectFit: "contain" }}
+            />
+            <Image
+              src={selectedPokemon.sprites.gmax.shiny}
+              alt="pikapika"
+              width={200}
+              height={200}
+              style={{ objectFit: "contain" }}
+            />
+          </>
+        )}
+        <Image
+          src={selectedPokemon.sprites.regular}
+          alt="pikapika"
+          width={400}
+          height={400}
+          style={{ objectFit: "contain" }}
+        />
+        {selectedPokemon.sprites.shiny && (
+          <Image
+            src={selectedPokemon.sprites.shiny}
+            alt="pikapika"
+            width={200}
+            height={200}
+            style={{ objectFit: "contain" }}
+          />
+        )}
+      </Box>
       <Box display="flex" flexDirection="column" alignItems="center">
         <Typography variant="h2">
           {selectedPokemon.name.fr} N°{selectedPokemon.pokedex_id}
         </Typography>
         <Typography variant="h3">{selectedPokemon.name.jp}</Typography>
       </Box>
+      {selectedPokemon.sexe && (
+        <PokemonSexe pokemonSexe={selectedPokemon.sexe} />
+      )}
       {selectedPokemon.stats && (
-        <Box width="500px" height="500px">
+        <Box width="500px">
           <StatsPoke
             stats={selectedPokemon.stats}
             name={selectedPokemon.name.fr}

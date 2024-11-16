@@ -1,4 +1,4 @@
-import { Stats } from "@/models/pokemonModel";
+import { Sexe, Stats } from "@/models/pokemonModel";
 
 export interface Pokemon {
   pokedex_id: number;
@@ -64,11 +64,8 @@ export interface Pokemon {
   height: string | null;
   weight: string | null;
   egg_groups: string[] | null;
-  sexe: {
-    male: number;
-    female: number;
-  } | null;
+  sexe: Sexe | null;
   catch_rate: number | null;
   level_100: number | null;
-  formes: any | null; // Utiliser `any` si les données de "formes" sont inconnues
+  formes: any | null;
 }
