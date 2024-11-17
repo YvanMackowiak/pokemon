@@ -1,17 +1,66 @@
 "use client";
 
+import { usePaginatedPokemon } from "@/hooks/usePokemon";
 import { Box, Typography } from "@mui/material";
+import Image from "next/image";
+import React, { useEffect } from "react";
 
 const PokedexPage = () => {
+  const { pokemonList, loading, hasMore, loadMore } = usePaginatedPokemon();
+
+  useEffect(() => {
+    if (!loading && pokemonList.length > 0) {
+      const container = document.querySelector("#scrollable-container");
+      if (container && container.scrollHeight <= container.clientHeight) {
+        console.log("Contenu insuffisant, chargement automatique...");
+        loadMore();
+      }
+    }
+  }, [pokemonList, loading, hasMore]);
+
+  const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
+    console.log(scrollHeight - scrollTop <= clientHeight + 10);
+
+    // Si l'utilisateur atteint le bas, charger plus de Pokémon
+    if (scrollHeight - scrollTop <= clientHeight + 10 && hasMore) {
+      console.log("Chargement de plus de Pokémon...");
+      loadMore();
+    }
+  };
+
   return (
-    <Box sx={{ padding: 4 }}>
+    <Box
+      id="scrollable-container"
+      sx={{ height: "100vh", overflow: "auto", padding: 2 }}
+      onScroll={handleScroll}
+    >
       <Typography variant="h4" gutterBottom>
         Pokedex
       </Typography>
-      <Typography variant="body1">
-        Bienvenue dans le Pokedex. Vous pouvez explorer les informations sur
-        tous les Pokémon ici !
-      </Typography>
+      <Box display="flex" flexWrap="wrap" gap={2}>
+        {pokemonList.map((pokemon, i) => (
+          <Box
+            key={pokemon.pokedex_id + i}
+            sx={{
+              width: "150px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              src={pokemon.sprites.regular}
+              alt={pokemon.name.fr}
+              width={200}
+              height={200}
+              style={{ objectFit: "contain" }}
+            />
+            <Typography>{pokemon.name.fr}</Typography>
+          </Box>
+        ))}
+      </Box>
+      {loading && <Typography>Chargement...</Typography>}
     </Box>
   );
 };

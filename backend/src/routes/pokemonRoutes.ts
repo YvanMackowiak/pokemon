@@ -23,6 +23,37 @@ router.get("/pokemon", (req, res) => {
   });
 });
 
+// route pour la pagination
+router.get("/pokemon/paginated", (req, res) => {
+  const { limit = 80, offset = 0 } = req.query;
+
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Erreur lors de la lecture des données");
+    }
+
+    const pokemonData = JSON.parse(data);
+    const startIndex = parseInt(offset as string, 10);
+    const endIndex = startIndex + parseInt(limit as string, 10);
+
+    if (startIndex >= pokemonData.length) {
+      return res
+        .status(404)
+        .json({ error: "Pas de Pokémon disponibles à cette page" });
+    }
+
+    const paginatedData = pokemonData.slice(startIndex, endIndex);
+
+    res.json({
+      data: paginatedData,
+      total: pokemonData.length,
+      offset: startIndex,
+      limit: parseInt(limit as string, 10),
+    });
+  });
+});
+
 // Route pour obtenir les evolution et pre evolution du pokemon
 router.get("/pokemon/:id/evolutions", (req: Request, res: Response) => {
   const { id } = req.params;
@@ -97,7 +128,7 @@ router.get("/pokemon/:id", (req, res) => {
 
       // Vérifie si le Pokémon a été trouvé
       if (!pokemon) {
-        return res.status(404).json({ error: "Pokémon non trouvé" });
+        return res.status(404).json({ error: "Pokémon non trouvé déso" });
       }
 
       // Renvoie le Pokémon trouvé

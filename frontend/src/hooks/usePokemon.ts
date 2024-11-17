@@ -14,37 +14,37 @@ export interface PokemonEvolutionProps {
   next: PokemonEvolution[];
 }
 
-export const usePokemon = () => {
-  const [pokemon, setPokemon] = useState<Pokemon[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+// export const usePokemon = () => {
+//   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
+//   const [loading, setLoading] = useState<boolean>(true);
+//   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchPokemon = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch("http://localhost:5000/api/pokemon");
+//   useEffect(() => {
+//     const fetchPokemon = async () => {
+//       try {
+//         setLoading(true);
+//         const response = await fetch("http://localhost:5000/api/pokemon");
 
-        if (!response.ok) {
-          throw new Error(
-            "Erreur lors de la récupération des données des Pokémon"
-          );
-        }
+//         if (!response.ok) {
+//           throw new Error(
+//             "Erreur lors de la récupération des données des Pokémon"
+//           );
+//         }
 
-        const data = await response.json();
-        setPokemon(data);
-      } catch (err) {
-        setError((err as Error).message);
-      } finally {
-        setLoading(false);
-      }
-    };
+//         const data = await response.json();
+//         setPokemon(data);
+//       } catch (err) {
+//         setError((err as Error).message);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
 
-    fetchPokemon();
-  }, []);
+//     fetchPokemon();
+//   }, []);
 
-  return { pokemon, loading, error };
-};
+//   return { pokemon, loading, error };
+// };
 
 export const usePokemonById = (id: number) => {
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
@@ -156,4 +156,55 @@ export const usePokemonEvolution = (id: number) => {
   }, [id]);
 
   return { pokemonEvo, error, loading };
+};
+
+export const usePaginatedPokemon = () => {
+  const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
+  const [offset, setOffset] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+
+  const fetchPokemon = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `http://localhost:5000/api/pokemon/paginated?limit=40&offset=${offset}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de la récupération des Pokémon");
+      }
+
+      const data = await response.json();
+
+      setPokemonList((prev) => {
+        // Ajouter uniquement les Pokémon qui ne sont pas déjà dans la liste
+        const newPokemon = data.data.filter(
+          (poke: Pokemon) =>
+            !prev.some(
+              (existingPoke) => existingPoke.pokedex_id === poke.pokedex_id
+            )
+        );
+        return [...prev, ...newPokemon];
+      });
+
+      setHasMore(offset + data.data.length < data.total); // Vérifie s'il reste des Pokémon
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPokemon();
+  }, [offset]);
+
+  const loadMore = () => {
+    if (!loading && hasMore) {
+      setOffset((prev) => prev + 80); // Incrémente l'offset pour charger les suivants
+    }
+  };
+
+  return { pokemonList, loading, hasMore, loadMore };
 };
