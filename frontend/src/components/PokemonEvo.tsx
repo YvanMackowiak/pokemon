@@ -3,6 +3,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Box } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import React from "react";
 
 interface PokemonEvoProps {
   sprit: string;
@@ -19,10 +20,9 @@ export const PokemonEvo = ({ sprit, spritEvo }: PokemonEvoProps) => {
   return (
     <Box display="flex" gap={2} alignItems="center">
       {spritEvo?.pre?.map((img) => (
-        <>
+        <React.Fragment key={img.pokedex_id}>
           <Image
             onClick={() => handleClick(img.pokedex_id)}
-            key={img.pokedex_id}
             src={img.sprites.regular}
             alt="pikapika"
             width={200}
@@ -38,7 +38,7 @@ export const PokemonEvo = ({ sprit, spritEvo }: PokemonEvoProps) => {
             {img.condition}
             <ArrowForwardIosIcon />
           </Box>
-        </>
+        </React.Fragment>
       ))}
       <Image
         src={sprit}
@@ -48,7 +48,7 @@ export const PokemonEvo = ({ sprit, spritEvo }: PokemonEvoProps) => {
         style={{ objectFit: "contain" }}
       />
       {spritEvo?.next?.map((img) => (
-        <>
+        <React.Fragment key={img.pokedex_id}>
           <Box
             display="flex"
             flexDirection="column"
@@ -67,7 +67,7 @@ export const PokemonEvo = ({ sprit, spritEvo }: PokemonEvoProps) => {
             height={200}
             style={{ objectFit: "contain", cursor: "pointer" }}
           />
-        </>
+        </React.Fragment>
       ))}
     </Box>
   );

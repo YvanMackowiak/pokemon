@@ -18,7 +18,10 @@ import Link from "next/link";
 import { useState } from "react";
 
 const drawerWidth = 240;
-const navItems = [{ label: "Accueil", href: "/" }];
+const navItems = [
+  { label: "Accueil", href: "/" },
+  { label: "Pokedex", href: "/pokedex" },
+];
 
 export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
