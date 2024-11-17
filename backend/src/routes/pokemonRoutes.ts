@@ -23,6 +23,7 @@ router.get("/pokemon", (req, res) => {
   });
 });
 
+// Route pour obtenir les evolution et pre evolution du pokemon
 router.get("/pokemon/:id/evolutions", (req: Request, res: Response) => {
   const { id } = req.params;
   const pokemonId = parseInt(id, 10);
@@ -76,7 +77,7 @@ router.get("/pokemon/:id/evolutions", (req: Request, res: Response) => {
   });
 });
 
-// // Nouvelle route pour obtenir un Pokémon spécifique par son id
+// Nouvelle route pour obtenir un Pokémon spécifique par son id
 router.get("/pokemon/:id", (req, res) => {
   const { id } = req.params;
 
@@ -103,6 +104,7 @@ router.get("/pokemon/:id", (req, res) => {
   });
 });
 
+// Route pour obtenir une list de pokemon
 router.post("/pokemon/list", (req, res) => {
   const { ids } = req.body;
   // if (!Array.isArray(ids)) {
