@@ -35,9 +35,6 @@ const PokedexPage = () => {
       sx={{ height: "100vh", overflow: "auto", padding: 2 }}
       onScroll={handleScroll}
     >
-      <Typography variant="h4" gutterBottom>
-        Pokedex
-      </Typography>
       <Box display="flex" flexWrap="wrap" gap={2}>
         {pokemonList.map((pokemon, i) => (
           <Box
@@ -56,7 +53,9 @@ const PokedexPage = () => {
               height={200}
               style={{ objectFit: "contain" }}
             />
-            <Typography>{pokemon.name.fr}</Typography>
+            <Typography>
+              N°{pokemon.pokedex_id} {pokemon.name.fr}
+            </Typography>
           </Box>
         ))}
       </Box>

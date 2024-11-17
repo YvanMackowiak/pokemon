@@ -202,7 +202,7 @@ export const usePaginatedPokemon = () => {
 
   const loadMore = () => {
     if (!loading && hasMore) {
-      setOffset((prev) => prev + 80); // Incrémente l'offset pour charger les suivants
+      setOffset((prev) => prev + 40); // Incrémente l'offset pour charger les suivants
     }
   };
 

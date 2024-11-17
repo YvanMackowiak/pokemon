@@ -25,7 +25,7 @@ router.get("/pokemon", (req, res) => {
 
 // route pour la pagination
 router.get("/pokemon/paginated", (req, res) => {
-  const { limit = 80, offset = 0 } = req.query;
+  const { limit = 40, offset = 0 } = req.query;
 
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
