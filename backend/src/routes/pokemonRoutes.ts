@@ -23,6 +23,59 @@ router.get("/pokemon", (req, res) => {
   });
 });
 
+router.get("/pokemon/:id/evolutions", (req: Request, res: Response) => {
+  const { id } = req.params;
+  const pokemonId = parseInt(id, 10);
+
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      return res.status(500).send("Erreur lors de la lecture des données");
+    }
+
+    const pokemonData = JSON.parse(data);
+
+    const pokemon = pokemonData.find(
+      (poke: { pokedex_id: number }) => poke.pokedex_id === pokemonId
+    );
+
+    if (!pokemon) {
+      return res.status(404).json({ error: "Pokémon non trouvé" });
+    }
+
+    const evolutions = {
+      pre: (pokemon.evolution?.pre || [])
+        .map((evo: { pokedex_id: number }) => {
+          const prePokemon = pokemonData.find(
+            (poke: { pokedex_id: number }) => poke.pokedex_id === evo.pokedex_id
+          );
+          return prePokemon
+            ? {
+                pokedex_id: prePokemon.pokedex_id,
+                sprites: prePokemon.sprites,
+              }
+            : null;
+        })
+        .filter(Boolean),
+
+      next: (pokemon.evolution?.next || [])
+        .map((evo: { pokedex_id: number }) => {
+          const nextPokemon = pokemonData.find(
+            (poke: { pokedex_id: number }) => poke.pokedex_id === evo.pokedex_id
+          );
+          return nextPokemon
+            ? {
+                pokedex_id: nextPokemon.pokedex_id,
+                sprites: nextPokemon.sprites,
+              }
+            : null;
+        })
+        .filter(Boolean),
+    };
+
+    res.json(evolutions);
+  });
+});
+
 // // Nouvelle route pour obtenir un Pokémon spécifique par son id
 router.get("/pokemon/:id", (req, res) => {
   const { id } = req.params;

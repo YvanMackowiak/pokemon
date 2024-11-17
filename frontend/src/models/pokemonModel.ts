@@ -7,14 +7,7 @@ export interface Pokemon {
     en: string;
     jp: string;
   };
-  sprites: {
-    regular: string;
-    shiny: string | null;
-    gmax?: {
-      regular: string;
-      shiny: string;
-    } | null;
-  };
+  sprites: Sprites;
   types: Type[] | null;
   talents: Talent[] | null;
   stats: Stats | null;
@@ -29,6 +22,14 @@ export interface Pokemon {
   formes: any | null;
 }
 
+export interface Sprites {
+  regular: string;
+  shiny: string | null;
+  gmax?: {
+    regular: string;
+    shiny: string;
+  };
+}
 export interface Type {
   name: string;
   image: string;

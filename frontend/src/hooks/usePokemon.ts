@@ -1,7 +1,17 @@
 "use client";
 
-import { Pokemon } from "@/models/pokemonModel";
+import { Pokemon, Sprites } from "@/models/pokemonModel";
 import { useEffect, useRef, useState } from "react";
+
+interface PokemonEvolution {
+  pokedex_id: number;
+  sprites: Sprites;
+}
+
+export interface PokemonEvolutionProps {
+  pre: PokemonEvolution[];
+  next: PokemonEvolution[];
+}
 
 export const usePokemon = () => {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
@@ -111,4 +121,38 @@ export const usePokemonListByIds = (ids: number[]) => {
   }, [ids, loading]);
 
   return { pokemonList, loading, error };
+};
+
+export const usePokemonEvolution = (id: number) => {
+  const [pokemonEvo, setPokemonEvo] = useState<PokemonEvolutionProps>();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPokemonById = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `http://localhost:5000/api/pokemon/${id}/evolutions`
+        );
+
+        if (!response.ok) {
+          throw new Error("Erreur lors de la récupération du Pokémon");
+        }
+
+        const data = await response.json();
+        setPokemonEvo(data);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchPokemonById();
+    }
+  }, [id]);
+
+  return { pokemonEvo, error, loading };
 };

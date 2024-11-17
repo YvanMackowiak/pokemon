@@ -1,9 +1,10 @@
 "use client";
 
+import { PokemonEvo } from "@/components/PokemonEvo";
 import { PokemonSexe } from "@/components/PokemonSexe";
 import { PokemonStats } from "@/components/PokemonStats";
 import { PokemonType } from "@/components/PokemonType";
-import { usePokemonById } from "@/hooks/usePokemon";
+import { usePokemonById, usePokemonEvolution } from "@/hooks/usePokemon";
 import {
   selectSelectedPokemon,
   setSelectedPokemon,
@@ -18,8 +19,9 @@ import { useEffect } from "react";
 export default function PokemonDetailPage() {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-
   const numericId = id && typeof id === "string" ? Number(id) : 0;
+  const { pokemonEvo } = usePokemonEvolution(numericId);
+  console.log(pokemonEvo);
 
   const selectedPokemon = useAppSelector(selectSelectedPokemon);
   const { pokemon } = usePokemonById(numericId);
@@ -94,6 +96,13 @@ export default function PokemonDetailPage() {
             name={selectedPokemon.name.fr}
           />
         </Box>
+      )}
+
+      {pokemonEvo && (
+        <PokemonEvo
+          sprit={selectedPokemon.sprites.regular}
+          spritEvo={pokemonEvo}
+        />
       )}
     </Box>
   );
