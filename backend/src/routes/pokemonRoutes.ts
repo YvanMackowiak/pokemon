@@ -45,7 +45,7 @@ router.get("/pokemon/:id/evolutions", (req: Request, res: Response) => {
 
     const evolutions = {
       pre: (pokemon.evolution?.pre || [])
-        .map((evo: { pokedex_id: number }) => {
+        .map((evo: { pokedex_id: number; condition: string }) => {
           const prePokemon = pokemonData.find(
             (poke: { pokedex_id: number }) => poke.pokedex_id === evo.pokedex_id
           );
@@ -53,13 +53,14 @@ router.get("/pokemon/:id/evolutions", (req: Request, res: Response) => {
             ? {
                 pokedex_id: prePokemon.pokedex_id,
                 sprites: prePokemon.sprites,
+                condition: evo.condition,
               }
             : null;
         })
         .filter(Boolean),
 
       next: (pokemon.evolution?.next || [])
-        .map((evo: { pokedex_id: number }) => {
+        .map((evo: { pokedex_id: number; condition: string }) => {
           const nextPokemon = pokemonData.find(
             (poke: { pokedex_id: number }) => poke.pokedex_id === evo.pokedex_id
           );
@@ -67,6 +68,7 @@ router.get("/pokemon/:id/evolutions", (req: Request, res: Response) => {
             ? {
                 pokedex_id: nextPokemon.pokedex_id,
                 sprites: nextPokemon.sprites,
+                condition: evo.condition,
               }
             : null;
         })

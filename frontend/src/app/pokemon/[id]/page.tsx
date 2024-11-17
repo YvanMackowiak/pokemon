@@ -21,6 +21,7 @@ export default function PokemonDetailPage() {
   const dispatch = useAppDispatch();
   const numericId = id && typeof id === "string" ? Number(id) : 0;
   const { pokemonEvo } = usePokemonEvolution(numericId);
+  console.log(pokemonEvo);
 
   const selectedPokemon = useAppSelector(selectSelectedPokemon);
   const { pokemon } = usePokemonById(numericId);

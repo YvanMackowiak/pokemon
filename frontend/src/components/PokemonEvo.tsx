@@ -29,7 +29,15 @@ export const PokemonEvo = ({ sprit, spritEvo }: PokemonEvoProps) => {
             height={200}
             style={{ objectFit: "contain", cursor: "pointer" }}
           />
-          <ArrowForwardIosIcon />
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            gap={1}
+          >
+            {img.condition}
+            <ArrowForwardIosIcon />
+          </Box>
         </>
       ))}
       <Image
@@ -41,7 +49,15 @@ export const PokemonEvo = ({ sprit, spritEvo }: PokemonEvoProps) => {
       />
       {spritEvo?.next?.map((img) => (
         <>
-          <ArrowForwardIosIcon />
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            gap={1}
+          >
+            {img.condition}
+            <ArrowForwardIosIcon />
+          </Box>
           <Image
             onClick={() => handleClick(img.pokedex_id)}
             key={img.pokedex_id}

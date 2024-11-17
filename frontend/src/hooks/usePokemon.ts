@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 interface PokemonEvolution {
   pokedex_id: number;
   sprites: Sprites;
+  condition: string;
 }
 
 export interface PokemonEvolutionProps {
