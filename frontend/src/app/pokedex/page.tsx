@@ -20,7 +20,6 @@ const PokedexPage = () => {
 
   const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
-    console.log(scrollHeight - scrollTop <= clientHeight + 10);
 
     // Si l'utilisateur atteint le bas, charger plus de Pokémon
     if (scrollHeight - scrollTop <= clientHeight + 10 && hasMore) {
@@ -32,7 +31,7 @@ const PokedexPage = () => {
   return (
     <Box
       id="scrollable-container"
-      sx={{ height: "100vh", overflow: "auto", padding: 2 }}
+      sx={{ height: "calc(100vh - 64px)", overflow: "auto", padding: 2 }}
       onScroll={handleScroll}
     >
       <Box display="flex" flexWrap="wrap" gap={2}>
@@ -50,6 +49,7 @@ const PokedexPage = () => {
               src={pokemon.sprites.regular}
               alt={pokemon.name.fr}
               width={200}
+              layout="intrinsic"
               height={200}
               style={{ objectFit: "contain" }}
             />
