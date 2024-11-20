@@ -16,6 +16,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import { useState } from "react";
+import { SearchPokemon } from "./SearchPokemon";
 
 const drawerWidth = 240;
 const navItems = [
@@ -70,7 +71,8 @@ export const Header = () => {
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
             PokeTeamBuilder
-          </Typography>
+          </Typography>{" "}
+          <SearchPokemon />
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
               <Link key={item.label} href={item.href} passHref>
