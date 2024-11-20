@@ -3,10 +3,16 @@
 import { usePaginatedPokemon } from "@/hooks/usePokemon";
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 const PokedexPage = () => {
+  const router = useRouter();
   const { pokemonList, loading, hasMore, loadMore } = usePaginatedPokemon();
+
+  const handleClick = (id: number) => {
+    router.push(`/pokemon/${id}`);
+  };
 
   useEffect(() => {
     if (!loading && pokemonList.length > 0) {
@@ -34,7 +40,7 @@ const PokedexPage = () => {
       sx={{ height: "calc(100vh - 64px)", overflow: "auto", padding: 2 }}
       onScroll={handleScroll}
     >
-      <Box display="flex" flexWrap="wrap" gap={2}>
+      <Box display="flex" flexWrap="wrap" gap={2} justifyContent="space-around">
         {pokemonList.map((pokemon, i) => (
           <Box
             key={pokemon.pokedex_id + i}
@@ -43,7 +49,9 @@ const PokedexPage = () => {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              cursor: "pointer",
             }}
+            onClick={() => handleClick(pokemon.pokedex_id)}
           >
             <Image
               src={pokemon.sprites.regular}
