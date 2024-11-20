@@ -164,4 +164,25 @@ router.post("/pokemon/list", (req, res) => {
   });
 });
 
+// Route pour les id et name
+router.get("/pokemonName", (req, res) => {
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Erreur lors de la lecture des données");
+    }
+
+    const pokemonData = JSON.parse(data);
+
+    const idsAndNames = pokemonData.map(
+      (pokemon: { pokedex_id: number; name: { fr: string } }) => ({
+        id: pokemon.pokedex_id,
+        name: pokemon.name.fr,
+      })
+    );
+
+    res.json(idsAndNames);
+  });
+});
+
 export default router;

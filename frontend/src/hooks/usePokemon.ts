@@ -14,6 +14,11 @@ export interface PokemonEvolutionProps {
   next: PokemonEvolution[];
 }
 
+export interface PokemonName {
+  id: number;
+  name: string;
+}
+
 // export const usePokemon = () => {
 //   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
 //   const [loading, setLoading] = useState<boolean>(true);
@@ -207,4 +212,36 @@ export const usePaginatedPokemon = () => {
   };
 
   return { pokemonList, loading, hasMore, loadMore };
+};
+
+export const usePokemonName = () => {
+  const [pokemon, setPokemon] = useState<PokemonName[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPokemon = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("http://localhost:5000/api/pokemonName");
+
+        if (!response.ok) {
+          throw new Error(
+            "Erreur lors de la récupération des données des Pokémon"
+          );
+        }
+
+        const data = await response.json();
+        setPokemon(data);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPokemon();
+  }, []);
+
+  return { pokemon, loading, error };
 };

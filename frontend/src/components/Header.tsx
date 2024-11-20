@@ -1,5 +1,6 @@
 "use client";
 
+import { usePokemonName } from "@/hooks/usePokemon";
 import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -26,6 +27,7 @@ const navItems = [
 
 export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { pokemon } = usePokemonName();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -71,8 +73,8 @@ export const Header = () => {
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
             PokeTeamBuilder
-          </Typography>{" "}
-          <SearchPokemon />
+          </Typography>
+          <SearchPokemon pokemon={pokemon} />
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
               <Link key={item.label} href={item.href} passHref>
