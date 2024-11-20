@@ -43,8 +43,12 @@ const PokedexPage = () => {
       <Box display="flex" flexWrap="wrap" gap={2} justifyContent="space-around">
         {pokemonList.map((pokemon, i) => (
           <Box
+            tabIndex={0}
             role="button"
             key={pokemon.pokedex_id + i}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") handleClick(pokemon.pokedex_id);
+            }}
             sx={{
               width: "150px",
               display: "flex",
