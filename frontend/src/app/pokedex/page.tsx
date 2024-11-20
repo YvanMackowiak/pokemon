@@ -43,6 +43,7 @@ const PokedexPage = () => {
       <Box display="flex" flexWrap="wrap" gap={2} justifyContent="space-around">
         {pokemonList.map((pokemon, i) => (
           <Box
+            role="button"
             key={pokemon.pokedex_id + i}
             sx={{
               width: "150px",
