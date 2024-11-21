@@ -1,15 +1,15 @@
 import cors from "cors";
 import express from "express";
-import pokemonRoutes from "./routes/pokemonRoutes"; // Importe ton fichier de routes Pokémon
+import pokemonRoutes from "./routes/pokemonRoutes";
 
 const app = express();
 const PORT = 5000;
 
-app.use(cors()); // Autorise les requêtes Cross-Origin
-app.use(express.json()); // Middleware pour parser le JSON
+app.use(cors());
+app.use(express.json());
 
 // Route pour les API Pokémon
-app.use("/api", pokemonRoutes); // Préfixe "/api" pour toutes les routes de `pokemonRoutes`
+app.use("/api", pokemonRoutes);
 
 app.get("/", (req, res) => {
   res.send("Serveur Node.js en fonctionnement !");

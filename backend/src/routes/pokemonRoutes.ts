@@ -4,7 +4,6 @@ import path from "path";
 
 const router = Router();
 
-// Chemin vers le fichier JSON des Pokémon
 const filePath = path.join(__dirname, "../../data/pokemon.json");
 
 router.get("/test", (req: Request, res: Response) => {
@@ -121,17 +120,14 @@ router.get("/pokemon/:id", (req, res) => {
     } else {
       const pokemonData = JSON.parse(data);
 
-      // Recherche du Pokémon par son id
       const pokemon = pokemonData.find(
         (poke: { pokedex_id: number }) => poke.pokedex_id === parseInt(id, 10)
       );
 
-      // Vérifie si le Pokémon a été trouvé
       if (!pokemon) {
         return res.status(404).json({ error: "Pokémon non trouvé déso" });
       }
 
-      // Renvoie le Pokémon trouvé
       res.json(pokemon);
     }
   });
