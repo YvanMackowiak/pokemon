@@ -74,7 +74,6 @@ export const Header = () => {
           >
             PokeTeamBuilder
           </Typography>
-          <SearchPokemon pokemon={pokemon} />
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
               <Link key={item.label} href={item.href} passHref>
@@ -82,6 +81,7 @@ export const Header = () => {
               </Link>
             ))}
           </Box>
+          <SearchPokemon pokemon={pokemon} />
         </Toolbar>
       </AppBar>
       <nav>
