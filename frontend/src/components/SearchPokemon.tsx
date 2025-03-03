@@ -1,61 +1,71 @@
 import { PokemonName } from "@/hooks/usePokemon";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
-import { styled } from "@mui/material/styles";
-
-const CustomAutocomplete = styled(Autocomplete)(({ theme }) => ({
-  "& .MuiOutlinedInput-root": {
-    backgroundColor: "#2e2e2e",
-    height: "40px",
-    borderRadius: "8px",
-    color: "#fff",
-    "& fieldset": {
-      borderColor: "#4caf50",
-    },
-    "&:hover fieldset": {
-      borderColor: "#81c784",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "#1de9b6",
-    },
-  },
-  "& .MuiInputLabel-root": {
-    color: "#81c784",
-  },
-  "& .MuiInputLabel-root.Mui-focused": {
-    color: "#1de9b6",
-  },
-  "& .MuiAutocomplete-popupIndicator": {
-    color: "#81c784",
-  },
-  "& .MuiAutocomplete-clearIndicator": {
-    color: "#e57373",
-  },
-}));
+import { Autocomplete, Box, TextField } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface SearchPokemonProps {
   pokemon: PokemonName[];
 }
+
 export const SearchPokemon = ({ pokemon }: SearchPokemonProps) => {
-  //TODO corriger les any
+  const router = useRouter();
+  const [inputValue, setInputValue] = useState("");
+
+  const handlePokemonSelect = (value: PokemonName | null) => {
+    if (value) {
+      router.push(`/pokemon/${value.id}`);
+    }
+  };
 
   return (
-    <CustomAutocomplete
-      disablePortal
-      options={pokemon}
-      getOptionLabel={(option: any) => option.name}
-      filterOptions={(options, { inputValue }) =>
-        options.filter(
-          (option: any) =>
-            option?.name?.toLowerCase().includes(inputValue.toLowerCase()) ||
-            option.id.toString().includes(inputValue)
-        )
-      }
-      isOptionEqualToValue={(option: any, value: any) => option.id === value.id}
-      sx={{ width: 300 }}
-      renderInput={(params) => (
-        <TextField sx={{ p: 0.5 }} {...params} label="Rechercher un Pokémon" />
-      )}
-    />
+    <Box sx={{ width: "100%", maxWidth: 200, mx: "auto", my: 2 }}>
+      <Autocomplete
+        options={pokemon}
+        getOptionLabel={(option) => option.name}
+        value={null}
+        onChange={(_, value) => handlePokemonSelect(value)}
+        inputValue={inputValue}
+        onInputChange={(_, newInputValue) => {
+          setInputValue(newInputValue);
+        }}
+        sx={{
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "white",
+            },
+            "&:hover fieldset": {
+              borderColor: "white",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "white",
+            },
+            color: "white",
+          },
+          "& .MuiInputLabel-root": {
+            color: "white",
+            "&.Mui-focused": {
+              color: "white",
+            },
+          },
+          "& .MuiAutocomplete-popupIndicator": {
+            color: "white",
+          },
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Rechercher"
+            variant="outlined"
+            fullWidth
+          />
+        )}
+        renderOption={(props, option) => (
+          <Box component="li" {...props}>
+            {option.name}
+          </Box>
+        )}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
+      />
+    </Box>
   );
 };
